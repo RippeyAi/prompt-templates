@@ -23,7 +23,9 @@ Derived Format`, // prefix containing instructions
 USER:  
 <input>  
 {{input}}
-</input>`, // suffix string instructions
+</input>`, 
+// suffix string instructions , this input will be replaced with the user input during processing by handlebars
+// in prompt-composer render function
     
     postfix: `Remove any additional descriptive text before presenting the JSON.
 Directly output the JSON structure without any introductory or explanatory sentences
@@ -77,6 +79,7 @@ const baseField3 = {
 const bolField1 = {
     operation_id: "507f1f77bcf86cd799439001",
     prompt_template_id: "507f1f77bcf86cd799439011",
+    // base_field_id: "507f1f77bcf86cd799439000",  Query: Can a field have a base field i.e field level inheritance
     name: "Bill of Lading Number",
     key: "bill_of_lading_number",
     type: "string",
@@ -160,13 +163,13 @@ const testVariables = {
     input: sampleBOL
 };  
 
-//Question: The prompt should contain the placeholder for extracted content itself, Isn't it?
+//Query: The prompt should contain the placeholder for extracted content i.e input itself, Isn't it?
 
 module.exports = {
     prompt_template_1,
     prompt_template_2,
     baseFields: [baseField1, baseField2, baseField3],
     templateFields: [bolField1, bolField2, bolField3, bolField4, bolField5, bolField6],
-    sampleBOL,
+    input,
     testVariables
 }; 
