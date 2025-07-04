@@ -53,7 +53,7 @@ class PromptComposer {
             allFields = [...baseFields];
         }
         
-        // Get template-specific fields
+        // Get template-specific fields overrides
         if (this.data.fields.has(templateId)) {
             allFields = [...allFields, ...this.data.fields.get(templateId)];
         }
@@ -65,23 +65,13 @@ class PromptComposer {
         // Sort by order
         allFields.sort((a, b) => a.order - b.order);
         
-        // Build JSON schema object from fields
+        // Simple POC: Build JSON schema object from fields
         const schemaObject = {};
         allFields.forEach(field => {
-            // Use empty string as default value, can be customized based on field type
-            let defaultValue = '';
-            if (field.type === 'number') {
-                defaultValue = '';  // Keep as empty string for consistency
-            } else if (field.type === 'boolean') {
-                defaultValue = '';
-            }
-            
-            schemaObject[field.key] = defaultValue;
-            
-            // Add comment with hint if available
-            if (field.hint) {
-                // Note: JSON doesn't support comments, but we can include hints in field names or descriptions
-            }
+            schemaObject[field.key] = {
+                type: field.type,
+                hint: field.hint
+            };
         });
         
         // Convert to formatted JSON string
@@ -104,7 +94,7 @@ class PromptComposer {
         return {
             preamble: (baseTemplate.preamble || '') + (template.preamble ? '\n\n' + template.preamble : ''),
             prefix: template.prefix || baseTemplate.prefix || '',
-            key_definition: '', // Will be generated from fields
+            key_definition: template.key_definition || baseTemplate.key_definition || '',
             suffix: template.suffix || baseTemplate.suffix || '',
             postfix: template.postfix || baseTemplate.postfix || ''
         };
@@ -143,16 +133,17 @@ class PromptComposer {
         }
 
         // Generate key_definition from fields
-        templateData.key_definition = this.composeKeyDefinitionFromFields(templateId, baseTemplateId);
+        const composed_key_definition = this.composeKeyDefinitionFromFields(templateId, baseTemplateId);
 
         // Process handlebars variables in each section using proper Handlebars compilation
         const processedTemplate = {
             preamble: this.processHandlebars(templateData.preamble, variables),
             prefix: this.processHandlebars(templateData.prefix, variables),
-            key_definition: templateData.key_definition, // Don't process key_definition through Handlebars as it's JSON
+            key_definition: this.processHandlebars(templateData.key_definition, {composed_key_definition: new Handlebars.SafeString(composed_key_definition)}),
             suffix: this.processHandlebars(templateData.suffix, variables),
             postfix: this.processHandlebars(templateData.postfix, variables)
         };
+        // console.log(processedTemplate);
 
         // Use master handlebars template to render final prompt
         // The master template will handle conditional rendering and proper escaping
@@ -186,7 +177,7 @@ class PromptComposer {
         return {
             ...template,
             baseTemplate: baseTemplate,
-            fields: allFields // Return all merged fields
+            fields: allFields
         };
     }
 

@@ -4,7 +4,7 @@
   "description": "A minimal prompt engine for supply chain document processing",
   "main": "prompt-engine.js",
   "scripts": {
-    "test": "node example.js"
+    "test": "jest"
   },
   "dependencies": {
     "handlebars": "^4.7.8"
@@ -16,5 +16,8 @@
     "document-processing"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.0.0"
+  }
 }

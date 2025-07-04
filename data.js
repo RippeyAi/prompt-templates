@@ -13,17 +13,12 @@ const prompt_template_1 = {
     
     prefix: `Further specific instructions:
 1. For bl_number the regex is ^[A-Za-z]{0,4}\\d+$ // Get from MBL number/BL number/Waybill number/Sea waybill number (always present)
-
-Derived Format`, // prefix containing instructions
-    
+ `, // prefix containing instructions
+    key_definition: `Key Definitions: \n {{composed_key_definition}}`,
     // key_definition will be auto-generated from fields
-    
-    suffix: `Leave the values empty if you're unsure of certain keys values. But it should follow exact derived format.
-
-USER:  
-<input>  
-{{input}}
-</input>`, 
+        
+    suffix: `Leave the values empty if you're unsure of certain keys values. But it should follow exact derived format. 
+    USER:  {input} `, 
 // suffix string instructions , this input will be replaced with the user input during processing by handlebars
 // in prompt-composer render function
     
@@ -33,16 +28,20 @@ Directly output the JSON structure without any introductory or explanatory sente
 AI:`
 };
 
+
 // Base template with base fields that will be merged
 const prompt_template_2 = {
     _id: "507f1f77bcf86cd799439000",
     name: "supply_chain_base",
     preamble: "You are an expert supply chain AI. You are a master of supply chain logistics and natural language processing for supply chain documents.",
     prefix: "This is a prefix:{{additional_instructions}}",
-    // key_definition will be auto-generated from base fields
+    // key_definitions will be auto-generated from base fields
+    key_definition: `Key Definitions: \n {{composed_key_definition}}`,
+
     suffix: "{{example_section}}\n\nUSER: {{input}}",
     postfix: "Remove any additional descriptive text before presenting the JSON.\nDirectly output the JSON structure without any introductory or explanatory sentences"
 };
+
 
 // Base template fields (common across all document types)
 const baseField1 = {
@@ -64,6 +63,7 @@ const baseField2 = {
     order: 2,
     hint: "Name of the entity that issued the document"
 };
+
 
 const baseField3 = {
     operation_id: "507f1f77bcf86cd799439001",

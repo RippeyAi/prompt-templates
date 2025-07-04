@@ -23,6 +23,30 @@ See index.js for usage.
 }
 ```
 
+ <small> Need to add sections for supporting this type of key definitions </small>
+```
+{{
+  line_items: [
+    {
+        field1: string, // hint text
+    
+     }
+  ]
+}}
+```
+
+**Sections:** 
+```javascript
+{
+    operation_id: "507f1f77bcf86cd799439001",
+    prompt_template_id: "507f1f77bcf86cd799439011",
+    name: "Field Name",
+    key: "field_key",
+    type: "string|number",
+    order: 1,
+    hint: "Description of the field"
+}
+
 **Fields:**
 ```javascript
 {
