@@ -38,7 +38,7 @@ const prompt_template_2 = {
     _id: "507f1f77bcf86cd799439000",
     name: "supply_chain_base",
     preamble: "You are an expert supply chain AI. You are a master of supply chain logistics and natural language processing for supply chain documents.",
-    prefix: "{{additional_instructions}}",
+    prefix: "This is a prefix:{{additional_instructions}}",
     // key_definition will be auto-generated from base fields
     suffix: "{{example_section}}\n\nUSER: {{input}}",
     postfix: "Remove any additional descriptive text before presenting the JSON.\nDirectly output the JSON structure without any introductory or explanatory sentences"
@@ -157,7 +157,7 @@ Vessel: MV GLOBAL TRADER
 Voyage: 2024-001`;
 
 // Test variables for rendering
-const testVariables = {
+const inputVariables = {
     additional_instructions: 'Focus on extracting all available details accurately.',
     example_section: 'Example: For BL "ABCD1234567", extract bill_of_lading_number: "ABCD1234567"',
     input: sampleBOL
@@ -170,6 +170,5 @@ module.exports = {
     prompt_template_2,
     baseFields: [baseField1, baseField2, baseField3],
     templateFields: [bolField1, bolField2, bolField3, bolField4, bolField5, bolField6],
-    input,
-    testVariables
+    inputVariables
 }; 
