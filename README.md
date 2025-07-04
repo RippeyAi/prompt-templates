@@ -14,7 +14,6 @@ See index.js for usage.
     _id: "507f1f77bcf86cd799439011",
     base_template_id: "507f1f77bcf86cd799439000", // Optional inheritance
     operation_id: "507f1f77bcf86cd799439001",
-    model_id: "507f1f77bcf86cd799439002", 
     task_id: "507f1f77bcf86cd799439003",
     name: "template_name",
     preamble: "Role and task description",

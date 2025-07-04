@@ -5,7 +5,7 @@ const prompt_template_1 = {
     _id: "507f1f77bcf86cd799439011",
     base_template_id: "507f1f77bcf86cd799439000", // ObjectId reference to base template
     operation_id: "507f1f77bcf86cd799439001",
-    model_id: "507f1f77bcf86cd799439002", 
+ //   model_id: "507f1f77bcf86cd799439002", 
     task_id: "507f1f77bcf86cd799439003",
     name: "bol_details_generic", // prompt template name
     preamble: `You are an expert supply chain AI. You are a master of supply chain logistics and natural language processing for Bill of Lading documents. Your task is to read the document given in <input> tags and extract the shipment details. You return output in JSON structured format and restrict providing any extra commentary. The keys of your output should be the fields and the values should be the correct text extracted. Remember to extract values if only explicitly mentioned.
@@ -32,7 +32,7 @@ AI:`
 };
 
 // Base template with base fields that will be merged
-const base_template = {
+const prompt_template_2 = {
     _id: "507f1f77bcf86cd799439000",
     name: "supply_chain_base",
     preamble: "You are an expert supply chain AI. You are a master of supply chain logistics and natural language processing for supply chain documents.",
@@ -164,7 +164,7 @@ const testVariables = {
 
 module.exports = {
     prompt_template_1,
-    base_template,
+    prompt_template_2,
     baseFields: [baseField1, baseField2, baseField3],
     templateFields: [bolField1, bolField2, bolField3, bolField4, bolField5, bolField6],
     sampleBOL,
