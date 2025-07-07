@@ -2,17 +2,13 @@
 
 A simple functional prompt engine that composes final prompts from prompt templates and fields with handlebars template inheritance.
 
-## Usage
-
-See index.js for usage.
 
 ## Data Structure
 
 **Prompt Template:**
 ```javascript
 {
-    _id: "507f1f77bcf86cd799439011",
-    base_template_id: "507f1f77bcf86cd799439000", // Optional inheritance
+    base_template_name: "base_template", // Optional inheritance
     operation_id: "507f1f77bcf86cd799439001",
     task_id: "507f1f77bcf86cd799439003",
     name: "template_name",
@@ -23,30 +19,6 @@ See index.js for usage.
 }
 ```
 
- <small> Need to add sections for supporting this type of key definitions </small>
-```
-{{
-  line_items: [
-    {
-        field1: string, // hint text
-    
-     }
-  ]
-}}
-```
-
-**Sections:** 
-```javascript
-{
-    operation_id: "507f1f77bcf86cd799439001",
-    prompt_template_id: "507f1f77bcf86cd799439011",
-    name: "Field Name",
-    key: "field_key",
-    type: "string|number",
-    order: 1,
-    hint: "Description of the field"
-}
-
 **Fields:**
 ```javascript
 {
@@ -54,7 +26,7 @@ See index.js for usage.
     prompt_template_id: "507f1f77bcf86cd799439011",
     name: "Field Name",
     key: "field_key",
-    type: "string|number",
+    type: "string|number|object|array", // added object and array to support nested structure
     order: 1,
     hint: "Description of the field"
 }
@@ -62,11 +34,10 @@ See index.js for usage.
 
 ## Files
 
-- `prompt-engine.js` - Core engine with prompt composer
-- `master_prompt_template.hbs` - Handlebars template for composition
-- `index.js` - Usage example
-- `data.js` - Sample data structures
-
+- `src/lib/engine` - Core engine with prompt composer
+- `src/lib/engine/master_prompt_template.hbs` - Handlebars template for composition
+- `config` - Sample file structured prompt config data
+-  `data` - Sample db structure prompt config data
 ## Installation
 
 ```bash
