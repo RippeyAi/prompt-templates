@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "A minimal prompt engine for supply chain document processing",
   "main": "prompt-engine.js",
-  
   "scripts": {
     "test": "jest",
-    "start": "node index.js",
-    "prompt-engine": "node bin/prompt-engine.js"
+    "start": "node src/app.js",
+    "engine": "node bin/index.js"
   },
   "dependencies": {
     "express": "^5.1.0",

@@ -35,12 +35,29 @@ A simple functional prompt engine that composes final prompts from prompt templa
 ## Files
 
 - `src/lib/engine` - Core engine with prompt composer
-- `src/lib/engine/master_prompt_template.hbs` - Handlebars template for composition
-- `config` - Sample file structured prompt config data
+- `src/lib/engine/master_prompt_template.hbs` - Handlebars template for composition, can be used in future for complex composition like inserting key definitions anywhere in the prefix, suffix preamble just by adding placeholder like {{composed_key_definition}} inside the string
+(or can be removed)
+- `templates` - Sample file structured prompt config data
 -  `data` - Sample db structure prompt config data
-## Installation
 
+## Usage
+
+- Run the installation
 ```bash
-npm install
-node index.js
-``` 
+yarn install
+```
+
+### Run through CLI
+```bash
+yarn engine generate customerName vendorName templateName
+```
+
+Example: 
+```bash
+yarn engine generate koerber cosco bol_details_generic
+```
+
+# Fields Composition
+**Query**
+- For fields composition, only key and the corresponding hint string is finally used, even field name is not in use should we keep it in field schema ?
+- Should we always merge hints, replace hints or allow flexibility?

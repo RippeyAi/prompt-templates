@@ -9,8 +9,8 @@ const readJsonFile = (filePath) => {
     }
 };
 
-const getFieldsAndTemplates = (vendor, templateName) => {
-    const vendorConfigPath = path.join(__dirname, `../../../config/vendor/${vendor}/${templateName}`);
+const getFieldsAndTemplates = (client, vendor, templateName) => {
+    const vendorConfigPath = path.join(__dirname, `../../../templates`, `${client}/${vendor}/${templateName}`);
     const fieldPath = path.join(vendorConfigPath, 'fields.json');
     const templatePath = path.join(vendorConfigPath, 'template.json');
     
@@ -20,8 +20,8 @@ const getFieldsAndTemplates = (vendor, templateName) => {
     let baseTemplateFields = [];
     let baseTemplate = {};
 
-    if (template.base_template_name) {
-        const baseTemplatePath = path.join(__dirname, "../../../config/base_templates", template.base_template_name);
+    if (template.base_template_path) {
+        const baseTemplatePath = path.join(__dirname, "../../../templates/base", template.base_template_path);
         baseTemplateFields = readJsonFile(path.join(baseTemplatePath, 'fields.json'));
         baseTemplate = readJsonFile(path.join(baseTemplatePath, 'template.json'));
     }

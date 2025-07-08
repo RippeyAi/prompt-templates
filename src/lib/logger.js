@@ -1,6 +1,5 @@
-// logger.ts
-import { createLogger, format, transports } from 'winston';
-import path from 'path';
+const { createLogger, format, transports } = require('winston');
+const path = require('path');
 
 const logFormat = format.combine(
   format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
@@ -14,11 +13,11 @@ const logger = createLogger({
   format: logFormat,
   transports: [
     new transports.File({
-      filename: path.join(__dirname, 'logs', 'error.log'),
+      filename: path.join(__dirname, '../../logs', 'error.log'),
       level: 'error',
     }),
     new transports.File({
-      filename: path.join(__dirname, 'logs', 'combined.log'),
+      filename: path.join(__dirname, '../../logs', 'combined.log'),
     }),
   ],
 });
@@ -32,4 +31,4 @@ if (process.env.NODE_ENV !== 'production') {
   );
 }
 
-export default logger;
+module.exports = logger;

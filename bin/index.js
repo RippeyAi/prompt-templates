@@ -3,7 +3,8 @@
 const path = require('path');
 const fs = require('fs');
 const PromptEngine = require('../src/lib/engine');
-const logger = require('../src/lib/utils/logger');
+const { getFieldsAndTemplates } = require('../src/lib/helpers/file-reader');
+const logger = require('../src/lib/logger');
 
 // Parse command line arguments
 const args = process.argv.slice(2);
@@ -11,7 +12,7 @@ const usage = `
 Usage: prompt-engine <command> [options]
 
 Commands:
-  generate <vendor> <template>  Generate a prompt for a specific vendor and template
+  generate <client> <vendor> <template>  Generate a prompt for a specific client, vendor and template
   list                         List all available vendors and templates
   help                         Show this help message
 
@@ -21,8 +22,7 @@ Options:
   --verbose, -v   Enable verbose logging
   
 Examples:
-  prompt-engine generate koerber ap
-  prompt-engine generate koerber ap -o output.txt
+  prompt-engine generate koerber cosco ap -o output.txt
   prompt-engine list
 `;
 
@@ -33,28 +33,32 @@ if (args.includes('--verbose') || args.includes('-v')) {
 
 function listTemplates() {
     logger.info('Listing available templates');
-    const configPath = path.join(__dirname, '../config');
+    const configPath = path.join(__dirname, '../templates');
     
-    // List vendors
-    const vendors = fs.readdirSync(path.join(configPath, 'vendor'))
-        .filter(f => fs.statSync(path.join(configPath, 'vendor', f)).isDirectory());
+    // List clients
+    const clients = fs.readdirSync(path.join(configPath));
     
-    console.log('\nAvailable templates:');
-    vendors.forEach(vendor => {
-        console.log(`\n${vendor}:`);
-        const templates = fs.readdirSync(path.join(configPath, 'vendor', vendor))
-            .filter(f => fs.statSync(path.join(configPath, 'vendor', vendor, f)).isDirectory());
-        templates.forEach(template => {
-            console.log(`  - ${template}`);
+    clients.forEach(client => {
+        console.log(`\n${client}:`);
+        const vendors = fs.readdirSync(path.join(configPath, client))
+            .filter(f => fs.statSync(path.join(configPath, client, f)).isDirectory());
+        vendors.forEach(vendor => {
+            console.log(`  - ${vendor}:`);
+            const templates = fs.readdirSync(path.join(configPath, client, vendor))
+                .filter(f => fs.statSync(path.join(configPath, client, vendor, f)).isDirectory());
+            templates.forEach(template => {
+                console.log(`    - ${template}`);
+            });
         });
     });
 }
 
-function generatePrompt(vendor, template, outputPath, format = 'text') {
-    logger.info(`Generating prompt for vendor: ${vendor}, template: ${template}`);
+function generatePromptFromConfig(client, vendor, templateName, outputPath, format = 'text') {
+    logger.info(`Generating prompt for client: ${client}, vendor: ${vendor}, template: ${templateName}`);
     try {
-        const prompt = PromptEngine.getPrompt(vendor, template);
-        
+        const {templateFields, template, baseTemplate, baseTemplateFields} = getFieldsAndTemplates(client, vendor, templateName);
+        const prompt = PromptEngine.runComposer({template, baseTemplate, baseTemplateFields, templateFields});
+    
         // Format output
         const output = format === 'json' ? JSON.stringify(prompt, null, 2) : prompt;
         
@@ -86,14 +90,15 @@ function main() {
             break;
 
         case 'generate':
-            if (args.length < 3) {
-                console.error('Error: vendor and template arguments are required');
+            if (args.length < 4) {
+                console.error('Error: client, vendor and template arguments are required');
                 console.log(usage);
                 process.exit(1);
             }
 
-            const vendor = args[1];
-            const template = args[2];
+            const client = args[1];
+            const vendor = args[2];
+            const template = args[3];
             
             // Parse options
             const outputIndex = args.indexOf('--output') !== -1 
@@ -106,7 +111,7 @@ function main() {
             const outputPath = outputIndex !== -1 ? args[outputIndex + 1] : null;
             const format = formatIndex !== -1 ? args[formatIndex + 1] : 'text';
 
-            generatePrompt(vendor, template, outputPath, format);
+            generatePromptFromConfig(client,vendor, template, outputPath, format);
             break;
 
         default:

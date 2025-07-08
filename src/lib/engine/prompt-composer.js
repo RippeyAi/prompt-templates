@@ -1,15 +1,15 @@
 const fs = require('fs');
 const path = require('path');
 const Handlebars = require('handlebars');
-const { composeFields, composeKeyDefinition } = require('./field-composer');
+const FieldsComposer = require('./fields-composer');
 
 class PromptComposer {
-    constructor(masterTemplatePath = './master_prompt_template.hbs') { // easily specify final prompt layout with master template
+    constructor(masterTemplatePath = './master_prompt_template.hbs', fieldsComposer = new FieldsComposer()) { // easily specify final prompt layout with master template
         // Data stores
         this.baseTemplate = null;
         this.childTemplate = null;
         this.mergedFields = null;
-
+        this.fieldsComposer = fieldsComposer;
         this.loadMasterHandlebarsTemplate(masterTemplatePath); 
     }
 
@@ -78,9 +78,9 @@ class PromptComposer {
         const templateFields = this.childTemplate.fields;
         const baseTemplateFields = this.baseTemplate.fields;
         const ignoreFields = this.baseTemplate.template?.ignore_fields || [];
-        const mergedFields = composeFields(baseTemplateFields, templateFields, ignoreFields);
+        const mergedFields = this.fieldsComposer.composeFields(baseTemplateFields, templateFields, ignoreFields);
         this.mergedFields = mergedFields;
-        return composeKeyDefinition(mergedFields);
+        return this.fieldsComposer.composeKeyDefinition(mergedFields);
     }
 
     // Main render function

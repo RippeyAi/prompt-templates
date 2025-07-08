@@ -8,7 +8,7 @@ Further specific instructions:
   "form_data": {{
     "po_number": "string", // Get PO number/Waybill number/Sea waybill number (always present)
   }},
-  "line_items": [ //  
+  "line_items": [
     {{
       "invoice_number": "string", // Get invoice number/Waybill number/Sea waybill number (always present) Get overriden invoice number/Waybill number/Sea waybill number (always present),
       "charge_details": [
@@ -17,7 +17,7 @@ Further specific instructions:
           "hs_code": "string", // look for HS data in the HS Code column
         }}
       ],
-      "bl_type": "string", //  Get overriden bl type
+      "bl_type": "string", // Get overriden bl type
     }}
   ],
   "container_details": {{
@@ -25,7 +25,7 @@ Further specific instructions:
   }},
   "po_number": "string", // This is a base hint This is an overriden hint,
   "payment_terms": "string", // This is a base hint,
-  "mbl_number": "string", //  Get from MBL number/BL number/Waybill number/Sea waybill number (always present)
+  "mbl_number": "string", // Get from MBL number/BL number/Waybill number/Sea waybill number (always present)
 
 }}
  Leave the values empty if you're unsure of certain keys values. But it should follow exact derived format. 

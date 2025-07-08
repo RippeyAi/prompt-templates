@@ -4,6 +4,6 @@
   "prefix": "Further specific instructions:\n1. For bl_number the regex is ^[A-Za-z]{0,4}\\d+$ \n Key Definition: \n {{",
   "suffix": "}}\n Leave the values empty if you're unsure of certain keys values. But it should follow exact derived format. \n    USER:  {input} ",
   "postfix": "Remove any additional descriptive text before presenting the JSON.\nDirectly output the JSON structure without any introductory or explanatory sentences\n\nAI:",
-  "base_template_name": "ap",
+  "base_template_path": "cosco/bol_details_generic",
   "ignore_fields": ["bl_number"]
 }
