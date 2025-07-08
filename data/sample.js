@@ -14,8 +14,8 @@ const prompt_template_1 = {
     prefix: `Further specific instructions:
 1. For bl_number the regex is ^[A-Za-z]{0,4}\\d+$ // Get from MBL number/BL number/Waybill number/Sea waybill number (always present)
  `, // prefix containing instructions
-    key_definition: `Key Definitions: \n {{composed_key_definition}}`,
-    // key_definition will be auto-generated from fields
+    // key_definition: `Key Definitions: \n {{composed_key_definition}}`, 
+    // NOTE: key_definition will be auto-generated from fields, so we can remove it from here
         
     suffix: `Leave the values empty if you're unsure of certain keys values. But it should follow exact derived format. 
     USER:  {input} `, 
@@ -36,7 +36,7 @@ const prompt_template_2 = {
     preamble: "You are an expert supply chain AI. You are a master of supply chain logistics and natural language processing for supply chain documents.",
     prefix: "This is a prefix:{{additional_instructions}}",
     // key_definitions will be auto-generated from base fields
-    key_definition: `Key Definitions: \n {{composed_key_definition}}`,
+    //key_definition: `Key Definitions: \n {{composed_key_definition}}`,
 
     suffix: "{{example_section}}\n\nUSER: {{input}}",
     postfix: "Remove any additional descriptive text before presenting the JSON.\nDirectly output the JSON structure without any introductory or explanatory sentences"

@@ -9,6 +9,7 @@ class PromptComposer {
         this.baseTemplate = null;
         this.childTemplate = null;
         this.mergedFields = null;
+        this.mergedTemplate = null;
         this.fieldsComposer = fieldsComposer;
         this.loadMasterHandlebarsTemplate(masterTemplatePath); 
     }
@@ -101,13 +102,17 @@ class PromptComposer {
 
         // Process handlebars variables in each section using proper Handlebars compilation 
         // might be unnecessary
-        const processedTemplate = {
+        this.mergedTemplate = {
             preamble: this.processHandlebars(templateData.preamble, variables),
             prefix: new Handlebars.SafeString(templateData.prefix),
-            // key_definition: this.processHandlebars(templateData.key_definition, {composed_key_definition: new Handlebars.SafeString(composed_key_definition)}),
-            key_definition: new Handlebars.SafeString(composed_key_definition),
             suffix: this.processHandlebars(templateData.suffix, variables),
             postfix: this.processHandlebars(templateData.postfix, variables)
+        };
+
+        const processedTemplate = {
+            ...this.mergedTemplate,
+            // Another Option: key_definition: this.processHandlebars(templateData.key_definition, {composed_key_definition: new Handlebars.SafeString(composed_key_definition)}),
+            key_definition: new Handlebars.SafeString(composed_key_definition)
         };
 
         return this.masterTemplate(processedTemplate).trim();
@@ -122,13 +127,15 @@ class PromptComposer {
     // const {template, fields} = getMergedTemplate();
     // const prompt = runComposer({template, fields, newTemplate,});
     // this could be used for multi level inheritance
-    getMergedTemplate(){
+    getMergedFields(){
         // returns the fields composed from the base and child template
+        return this.mergedFields;
     }
 
     getMergedTemplate(){
         // returns the template composed from the base and child template
         // this could be used as template for the new template
+        return this.mergedTemplate;
     }
 
     getStats() {

@@ -111,7 +111,7 @@ function main() {
             const outputPath = outputIndex !== -1 ? args[outputIndex + 1] : null;
             const format = formatIndex !== -1 ? args[formatIndex + 1] : 'text';
 
-            generatePromptFromConfig(client,vendor, template, outputPath, format);
+            generatePromptFromConfig(client, vendor, template, outputPath, format);
             break;
 
         default:

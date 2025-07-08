@@ -56,6 +56,9 @@ Example:
 ```bash
 yarn engine generate koerber cosco bol_details_generic
 ```
+```bash
+yarn engine generate koerber cosco bol_details_generic -o test_output.txt
+```
 
 # Fields Composition
 **Query**

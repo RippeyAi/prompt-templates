@@ -8,11 +8,11 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
-app.get('/prompt/generate/:vendor/:template', (req, res) => {
+app.get('/prompt/generate/:client/:vendor/:template', (req, res) => {
     // vendor, customer, file_type
-    const { vendor, template: templateName } = req.params;
+    const { client, vendor, template: templateName } = req.params;
     try {
-        const {templateFields, template, baseTemplate, baseTemplateFields} = getFieldsAndTemplates(vendor, templateName);
+        const {templateFields, template, baseTemplate, baseTemplateFields} = getFieldsAndTemplates(client, vendor, templateName);
         const prompt = PromptEngine.runComposer({template, baseTemplate, baseTemplateFields, templateFields});
         console.log(prompt);
         res.send(prompt);

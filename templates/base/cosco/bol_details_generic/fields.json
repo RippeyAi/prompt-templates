@@ -24,6 +24,7 @@
             {
                 "key": "charge_details",
                 "type": "array",
+                "order": 1,
                 "fields": [
                     {
                         "key": "po_number",
@@ -31,7 +32,8 @@
                     },
                     {
                         "key": "hs_code",
-                        "hint": "look for HS data in the HS Code column"
+                        "hint": "look for HS data in the HS Code column",
+                        "order": 2
                     }
                 ]
             }
@@ -39,6 +41,7 @@
     },
     {
         "key": "container_details",
+        "order": 1,
         "flatten_key": "form_data.container_details",
         "type": "object",
         "hint": "container details",

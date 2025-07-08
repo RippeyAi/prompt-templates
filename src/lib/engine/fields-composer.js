@@ -8,14 +8,14 @@ class FieldsComposer {
     this.mergeStrategy = MergeStrategy.APPEND;
   }
 
-  mergeField(baseField = {}, templateField = {}, strategy) {
+  _mergeField(baseField = {}, templateField = {}, strategy) {
     const mergedField = { ...baseField, ...templateField };
 
     // Handle different merge strategies
     if (strategy === MergeStrategy.REPLACE) {
       // Handle nested fields based on type
       if (["object", "array"].includes(mergedField.type)) {
-        mergedField.fields = this.mergeFieldArrays(
+        mergedField.fields = this._mergeFieldArrays(
           [],
           templateField.fields || [],
           strategy
@@ -25,9 +25,8 @@ class FieldsComposer {
       // Merge hints for append strategy
       mergedField.hint = `${baseField.hint || ""} ${templateField.hint || ""}`;
 
-      // Handle nested fields based on type
       if (["object", "array"].includes(mergedField.type)) {
-        mergedField.fields = this.mergeFieldArrays(
+        mergedField.fields = this._mergeFieldArrays(
           baseField.fields || [],
           templateField.fields || [],
           strategy
@@ -45,7 +44,7 @@ class FieldsComposer {
    * @param {string} strategy - The merge strategy to use.
    * @returns {object} A flat object containing the merged fields.
    */
-  mergeFieldArrays(
+  _mergeFieldArrays(
     baseTemplateFields,
     templateFields,
     strategy = this.mergeStrategy
@@ -53,19 +52,46 @@ class FieldsComposer {
     const result = {};
     const processedFields = new Map();
 
-    // process base fields
+    // Create a combined array of all fields for processing with order
+    const allFields = [];
+    
+    // Process base fields
     baseTemplateFields.forEach((field) => {
-      result[field.key] = field;
+      allFields.push({ ...field, source: 'base' });
     });
 
     // Process template fields
     templateFields.forEach((field) => {
-      result[field.key] = this.mergeField(
-        result[field.key] || {},
-        field,
-        strategy
-      );
-      processedFields.set(field.key, field);
+      allFields.push({ ...field, source: 'template' });
+    });
+
+    // Sort all fields by order, then by source (template fields override base fields with same order)
+    allFields.sort((a, b) => {
+      const orderA = a.order || 999999;
+      const orderB = b.order || 999999;
+      if (orderA !== orderB) {
+        return orderA - orderB;
+      }
+      // If orders are the same, template fields come after base fields (for override behavior)
+      return a.source === 'template' ? 1 : -1;
+    });
+
+    // Process fields in sorted order
+    allFields.forEach((field) => {
+      if (field.source === 'base') {
+        // Only add base field if not already processed by a template field
+        if (!processedFields.has(field.key)) {
+          result[field.key] = field;
+        }
+      } else {
+        // Template field - merge with existing or add new
+        result[field.key] = this._mergeField(
+          result[field.key] || {},
+          field,
+          strategy
+        );
+        processedFields.set(field.key, field);
+      }
     });
 
     return result;
@@ -84,7 +110,7 @@ class FieldsComposer {
     );
 
     // Merge base and template fields
-    const mergedFields = this.mergeFieldArrays(
+    const mergedFields = this._mergeFieldArrays(
       filteredBaseFields,
       templateFields,
       mergeStrategy
@@ -106,11 +132,16 @@ class FieldsComposer {
     const bracesOpen = "{{";
     const bracesClose = "}}";
 
-    for (const [key, data] of Object.entries(fieldsObject)) {
-      if (!data || typeof data !== "object") {
-        continue; // skip malformed entries
-      }
+    // Convert object to array of [key, data] pairs and sort by order property
+    const sortedEntries = Object.entries(fieldsObject)
+      .filter(([key, data]) => data && typeof data === "object") // filter out malformed entries
+      .sort(([keyA, dataA], [keyB, dataB]) => {
+        const orderA = dataA.order || 999999; // Fields without order go to the end
+        const orderB = dataB.order || 999999;
+        return orderA - orderB;
+      });
 
+    for (const [key, data] of sortedEntries) {
       // Safely get field properties, defaulting where necessary
       const fieldKey = data.key || key;
       const fieldType = data.type || "string";
