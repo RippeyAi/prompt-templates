@@ -1,0 +1,4 @@
+{
+    "name": "commercial_invoice_v1",
+    "key_definition": "Key Definition: \n \\{{ \n {{{composed_key_definition}}}  \n }}"
+}

@@ -1,8 +1,0 @@
-module.exports = {
-    "_id": "507f1f77bcf86cd799439001",
-    "name": "entity_details_extraction_v2",
-    "preamble": "You are an expert supply chain AI. You are a master of supply chain logistics and natural language processing for Shipment documents. Your task is to read the document and extract the shipment details. You return output in JSON structured format and restrict providing any extra commentary. The keys of your output should be the fields and the values should be the correct text extracted. Remember to extract values if only explicitly mentioned if not the leave it blank. Remember, shipper and Seller are not same.\n\\n, \\t, \\f are new lines, do not include them in output.",
-    "prefix": "Further instructions\n1. For each field, only extract them if explicitly mentioned in the input.\n2. Get the full Organization's name in the name fields\n3. Get the full address in the address field\n4. When cargo_pickup_location is not present assume \"SUPPLIER\" as cargo_pickup_location only when the supplier section is present in the input.\n5. cargo_pickup_location can be present as LOADED RETURN\n6. when no valid shipper is found you can extract if from \"FROM\".\n7. when no valid consignee is found you can extract it from \"LTL\".\n\nKey Definition:\n{{",
-    "suffix": "\n}}\n\nLeave the values empty if you're unsure of certain keys values. But it should follow above key definition JSON structure.\n\nUSER:\n{input}",
-    "postfix": "Remove any additional descriptive text before presenting the JSON\nDirectly output the JSON structure without any introductory or explanatory sentences\n\nAI:"
-}; 

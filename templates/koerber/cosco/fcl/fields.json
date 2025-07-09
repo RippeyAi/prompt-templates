@@ -1,7 +1,0 @@
-[
-    {
-        "key": "new_number",
-        "type": "string",
-        "hint": "Get from MBL number/BL number/Waybill number/Sea waybill number (always present)"
-    }
-]

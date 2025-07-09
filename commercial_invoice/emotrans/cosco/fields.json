@@ -1,0 +1,12 @@
+[
+    {
+      "key": "line_items",
+      "type": "array",
+      "hint": "Overriden The items in this list are the individual items that are being charged",
+      "fields": [
+        { "name": "Description", "key": "description", "type": "string", "hint": "Overriden goods/commodity or charge description" },
+        { "name": "Weight", "key": "weight", "type": "float", "order": 2, "hint": "Overriden weight of package" },
+        { "name": "Weight Uom", "key": "weight_uom", "type": "string", "order": 1, "hint": "unit of measure for weight" }
+      ]
+    }
+]
