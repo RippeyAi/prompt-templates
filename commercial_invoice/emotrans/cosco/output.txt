@@ -4,9 +4,78 @@ Your output must be in a structured JSON format, without any extra commentary or
 The keys in your output should correspond to the fields defined below, and the values should be the exact text extracted from the document. 
 Do not include new line characters (\n, \t, \f) in the output values.
 
-If you are uncertain about a value, leave it empty. Ensure your output strictly adheres to the provided JSON structure.
+Overriden If you are uncertain about a value, leave it empty. Ensure your output strictly adheres to the provided JSON structure.
 
 
+Key Definition: 
+ {{ 
+   "form_data": {{
+    "file_type": "string", // This is constant across all documents. Set to 'commercial_invoice'.,
+    "due_amount": "string", // The amount remaining to be paid.,
+    "exporter_address": "string", // The complete address of the exporter, including street, city, state/province, postal code, and country.,
+    "exporter_name": "string", // The full registered name of the exporter.,
+    "incoterms": "string", // Standard Incoterms codes and descriptions (e.g., 'FOB', 'CIF', 'EXW Dalian').,
+    "invoice_currency": "string", // The primary currency of the invoice (e.g., 'USD', 'EUR').,
+    "invoice_date": "string", // The date the invoice was issued, in its original format.,
+    "invoice_due_date": "string", // The date by which the invoice payment is due, in its original format.,
+    "invoice_number": "string", // The primary invoice number. Prioritize this if multiple numbers are present.,
+    "payment_terms": "string", // The agreed-upon payment terms (e.g., 'Net 30', 'Due on receipt').,
+    "pickup_date": "string", // The date goods were picked up or are scheduled for pickup, in its original format.,
+    "pickup_location_address": "string", // The full address of the pickup location.,
+    "pickup_location_name": "string", // The name of the pickup location.,
+    "remittance_address": "string", // The complete address for sending payment, typically found under 'Remit To' or 'Bank Details'.,
+    "remittance_name": "string", // The name of the entity to whom payment should be remitted.,
+    "steamship_line_no": "string", // The steamship line number or booking reference.,
+    "sub_total": "string", // The sum of all line item amounts,
+    "total_amount": "string", // The grand total of the invoice,
+    "total_quantity": "string", // The total quantity of all items on the invoice.,
+    "total_tax": "string", // The total tax amount applied to the invoice.,
+    "total_vat": "string", // The total VAT amount applied to the invoice.,
+    "volume_uom": "string", // The unit of measure for volume (e.g., 'CBM', 'CFT').,
+    "voyage_number": "string", // The voyage or flight number.,
+    "weight_uom": "string", // The unit of measure for weight (e.g., 'KG', 'LBS').,
+    "bill_to_name": "string", // The name of the entity to whom the invoice is billed.,
+    "bill_to_address": "string", // The complete address of the billing entity.,
+    "commodity": "string", // The general description of the goods being shipped.,
+    "commodity_code": "string", // The code associated with the commodity.,
+    "customer_address": "string", // The complete address of the customer.,
+    "customer_id": "string", // The customer's unique identification number.,
+    "customer_name": "string", // The full registered name of the customer.,
+    "customer_po": "string", // The customer's purchase order number. Look for 'Customer PO', 'PO Number', 'Buyer Ref.', 'Customer Reference'.,
+    "customer_address_recipient": "string", // The specific recipient name at the customer's address if different from customer_name.,
+    "customer_tax_id": "string", // The customer's tax identification number.,
+    "hs_code": "string", // The Harmonized System (HS) code applicable to the primary commodity or document if not item-specific.,
+    "ship_to_address": "string", // The complete address where the goods are to be shipped.,
+    "ship_to_name": "string", // The name of the entity at the ship-to address.,
+    "vendor_address": "string", // The complete address of the vendor (if different from exporter).,
+    "vendor_name": "string", // The full registered name of the vendor (if different from exporter).,
+    "vendor_address_recipient": "string", // The specific recipient name at the vendor's address.,
+    "temperature": "string", // The required temperature for the shipment, including unit (e.g., '2-8 °C', 'Ambient').
+  }},
+  "line_items": [ // The items in this list are the individual items that are being charged Overriden The items in this list are the individual items that are being charged
+    {{
+      "weight_uom": "string", // unit of measure for weight unit of measure for weight,
+      "weight": "float", // weight of package Overriden weight of package,
+      "description": "string", // goods/commodity or charge description Overriden goods/commodity or charge description,
+      "quantity": "float", // quantity of package or charge,
+      "package_type": "string", // type of package such as pallet, box, crate etc.,
+      "rate_charge": "float", // the unit price or rate per item or unit of measurement.,
+      "payment_amount": "float", // the specific amount to be paid according to the payment terms.,
+      "exchange_rate": "float", // the rate used to convert from one currency to another.,
+      "amount": "float", // the total charge amount after all factors (except VAT) are tallied,
+      "currency": "string", // the currency in which the amounts are denominated.,
+      "vat": "float", // the value-added tax (vat) amount or percentage.,
+      "rate_class": "string", // the classification or category of rates, often used in shipping or transportation.,
+      "country_of_origin": "string", // if you find only one, repeat it for other table data as well,
+      "chargeable_weight": "float", // the weight used for billing purposes.,
+      "accessorial_charge": "float", // any additional charges beyond the basic freight charges.,
+      "part_number": "string", // The part or material number. Look for labels like 'Material', 'Part Number', or 'Item'.,
+      "po_number": "string", // The Purchase Order number. Look for labels like 'Your PO No.', 'Reference:', or 'Order No'.,
+      "product_code": "string", // the code assigned to a product for identification.,
+      "sku": "string", // the stock keeping unit (sku) number used for inventory management.
+    }}
+  ]  
+ }}
 
 Example of Correct Extraction
 
