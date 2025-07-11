@@ -1,6 +1,6 @@
 {
-    "name": "commercial_invoice_v1",
-    "model_name": "gpt-4-turbo",
+    "name": "commercial_invoice",
+    "model_name": "gemini-2.5",
     "model_id": "12adf123d1a12e12a31d6df7",
     "task_name": "commercial_invoice_extraction"
 }

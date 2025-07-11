@@ -1,76 +1,366 @@
 [
-    {
-      "key": "form_data",
-      "type": "object",
-      "hint": "Form data extracted from the document.",
-      "fields": [
-        { "name": "File Type", "key": "file_type", "type": "string", "hint": "This is constant across all documents. Set to 'commercial_invoice'." },
-        { "name": "Due Amount", "key": "due_amount", "type": "string", "hint": "The amount remaining to be paid." },
-        { "name": "Exporter Address", "key": "exporter_address", "type": "string", "hint": "The complete address of the exporter, including street, city, state/province, postal code, and country." },
-        { "name": "Exporter Name", "key": "exporter_name", "type": "string", "hint": "The full registered name of the exporter." },
-        { "name": "Incoterms", "key": "incoterms", "type": "string", "hint": "Standard Incoterms codes and descriptions (e.g., 'FOB', 'CIF', 'EXW Dalian')." },
-        { "name": "Invoice Currency", "key": "invoice_currency", "type": "string", "hint": "The primary currency of the invoice (e.g., 'USD', 'EUR')." },
-        { "name": "Invoice Date", "key": "invoice_date", "type": "string", "hint": "The date the invoice was issued, in its original format." },
-        { "name": "Invoice Due Date", "key": "invoice_due_date", "type": "string", "hint": "The date by which the invoice payment is due, in its original format." },
-        { "name": "Invoice Number", "key": "invoice_number", "type": "string", "hint": "The primary invoice number. Prioritize this if multiple numbers are present." },
-        { "name": "Payment Terms", "key": "payment_terms", "type": "string", "hint": "The agreed-upon payment terms (e.g., 'Net 30', 'Due on receipt')." },
-        { "name": "Pickup Date", "key": "pickup_date", "type": "string", "hint": "The date goods were picked up or are scheduled for pickup, in its original format." },
-        { "name": "Pickup Location Address", "key": "pickup_location_address", "type": "string", "hint": "The full address of the pickup location." },
-        { "name": "Pickup Location Name", "key": "pickup_location_name", "type": "string", "hint": "The name of the pickup location." },
-        { "name": "Remittance Address", "key": "remittance_address", "type": "string", "hint": "The complete address for sending payment, typically found under 'Remit To' or 'Bank Details'." },
-        { "name": "Remittance Name", "key": "remittance_name", "type": "string", "hint": "The name of the entity to whom payment should be remitted." },
-        { "name": "Steamship Line No", "key": "steamship_line_no", "type": "string", "hint": "The steamship line number or booking reference." },
-        { "name": "Sub Total", "key": "sub_total", "type": "string", "hint": "The sum of all line item amounts" },
-        { "name": "Total Amount", "key": "total_amount", "type": "string", "hint": "The grand total of the invoice" },
-        { "name": "Total Quantity", "key": "total_quantity", "type": "string", "hint": "The total quantity of all items on the invoice." },
-        { "name": "Total Tax", "key": "total_tax", "type": "string", "hint": "The total tax amount applied to the invoice." },
-        { "name": "Total Vat", "key": "total_vat", "type": "string", "hint": "The total VAT amount applied to the invoice." },
-        { "name": "Volume Uom", "key": "volume_uom", "type": "string", "hint": "The unit of measure for volume (e.g., 'CBM', 'CFT')." },
-        { "name": "Voyage Number", "key": "voyage_number", "type": "string", "hint": "The voyage or flight number." },
-        { "name": "Weight Uom", "key": "weight_uom", "type": "string", "hint": "The unit of measure for weight (e.g., 'KG', 'LBS')." },
-        { "name": "Bill To Name", "key": "bill_to_name", "type": "string", "hint": "The name of the entity to whom the invoice is billed." },
-        { "name": "Bill To Address", "key": "bill_to_address", "type": "string", "hint": "The complete address of the billing entity." },
-        { "name": "Commodity", "key": "commodity", "type": "string", "hint": "The general description of the goods being shipped." },
-        { "name": "Commodity Code", "key": "commodity_code", "type": "string", "hint": "The code associated with the commodity." },
-        { "name": "Customer Address", "key": "customer_address", "type": "string", "hint": "The complete address of the customer." },
-        { "name": "Customer Id", "key": "customer_id", "type": "string", "hint": "The customer's unique identification number." },
-        { "name": "Customer Name", "key": "customer_name", "type": "string", "hint": "The full registered name of the customer." },
-        { "name": "Customer Po", "key": "customer_po", "type": "string", "hint": "The customer's purchase order number. Look for 'Customer PO', 'PO Number', 'Buyer Ref.', 'Customer Reference'." },
-        { "name": "Customer Address Recipient", "key": "customer_address_recipient", "type": "string", "hint": "The specific recipient name at the customer's address if different from customer_name." },
-        { "name": "Customer Tax Id", "key": "customer_tax_id", "type": "string", "hint": "The customer's tax identification number." },
-        { "name": "Hs Code", "key": "hs_code", "type": "string", "hint": "The Harmonized System (HS) code applicable to the primary commodity or document if not item-specific." },
-        { "name": "Ship To Address", "key": "ship_to_address", "type": "string", "hint": "The complete address where the goods are to be shipped." },
-        { "name": "Ship To Name", "key": "ship_to_name", "type": "string", "hint": "The name of the entity at the ship-to address." },
-        { "name": "Vendor Address", "key": "vendor_address", "type": "string", "hint": "The complete address of the vendor (if different from exporter)." },
-        { "name": "Vendor Name", "key": "vendor_name", "type": "string", "hint": "The full registered name of the vendor (if different from exporter)." },
-        { "name": "Vendor Address Recipient", "key": "vendor_address_recipient", "type": "string", "hint": "The specific recipient name at the vendor's address." },
-        { "name": "Temperature", "key": "temperature", "type": "string", "hint": "The required temperature for the shipment, including unit (e.g., '2-8 °C', 'Ambient')." }
-      ]
-    },
-    {
-      "key": "line_items",
-      "type": "array",
-      "hint": "The items in this list are the individual items that are being charged",
-      "fields": [
-        { "name": "Description", "key": "description", "type": "string", "hint": "goods/commodity or charge description" },
-        { "name": "Weight", "key": "weight", "type": "float", "hint": "weight of package" },
-        { "name": "Weight Uom", "key": "weight_uom", "type": "string", "hint": "unit of measure for weight" },
-        { "name": "Quantity", "key": "quantity", "type": "float", "hint": "quantity of package or charge" },
-        { "name": "Package Type", "key": "package_type", "type": "string", "hint": "type of package such as pallet, box, crate etc." },
-        { "name": "Rate Charge", "key": "rate_charge", "type": "float", "hint": "the unit price or rate per item or unit of measurement." },
-        { "name": "Payment Amount", "key": "payment_amount", "type": "float", "hint": "the specific amount to be paid according to the payment terms." },
-        { "name": "Exchange Rate", "key": "exchange_rate", "type": "float", "hint": "the rate used to convert from one currency to another." },
-        { "name": "Amount", "key": "amount", "type": "float", "hint": "the total charge amount after all factors (except VAT) are tallied" },
-        { "name": "Currency", "key": "currency", "type": "string", "hint": "the currency in which the amounts are denominated." },
-        { "name": "Vat", "key": "vat", "type": "float", "hint": "the value-added tax (vat) amount or percentage." },
-        { "name": "Rate Class", "key": "rate_class", "type": "string", "hint": "the classification or category of rates, often used in shipping or transportation." },
-        { "name": "Country Of Origin", "key": "country_of_origin", "type": "string", "hint": "if you find only one, repeat it for other table data as well" },
-        { "name": "Chargeable Weight", "key": "chargeable_weight", "type": "float", "hint": "the weight used for billing purposes." },
-        { "name": "Accessorial Charge", "key": "accessorial_charge", "type": "float", "hint": "any additional charges beyond the basic freight charges." },
-        { "name": "Part Number", "key": "part_number", "type": "string", "hint": "The part or material number. Look for labels like 'Material', 'Part Number', or 'Item'." },
-        { "name": "Po Number", "key": "po_number", "type": "string", "hint": "The Purchase Order number. Look for labels like 'Your PO No.', 'Reference:', or 'Order No'." },
-        { "name": "Product Code", "key": "product_code", "type": "string", "hint": "the code assigned to a product for identification." },
-        { "name": "Sku", "key": "sku", "type": "string", "hint": "the stock keeping unit (sku) number used for inventory management." }
-      ]
-    }
-  ]
+  {
+    "key": "form_data",
+    "name": "Form Data",
+    "type": "object",
+    "hint": "Top-level form data from the document.",
+    "fields": [
+      {
+        "key": "file_type",
+        "name": "File Type",
+        "type": "commercial_invoice",
+        "hint": "This is constant across all documents."
+      },
+      {
+        "key": "due_amount",
+        "name": "Due Amount",
+        "type": "string",
+        "hint": "The amount remaining to be paid."
+      },
+      {
+        "key": "exporter_address",
+        "name": "Exporter Address",
+        "type": "string",
+        "hint": "The complete address of the exporter, including street, city, state/province, postal code, and country."
+      },
+      {
+        "key": "exporter_name",
+        "name": "Exporter Name",
+        "type": "string",
+        "hint": "The full registered name of the exporter."
+      },
+      {
+        "key": "incoterms",
+        "name": "Incoterms",
+        "type": "string",
+        "hint": "Standard Incoterms codes and descriptions (e.g., \"FOB\", \"CIF\", \"EXW Dalian\")."
+      },
+      {
+        "key": "invoice_currency",
+        "name": "Invoice Currency",
+        "type": "string",
+        "hint": "The primary currency of the invoice (e.g., \"USD\", \"EUR\")."
+      },
+      {
+        "key": "invoice_date",
+        "name": "Invoice Date",
+        "type": "string",
+        "hint": "The date the invoice was issued, in its original format."
+      },
+      {
+        "key": "invoice_due_date",
+        "name": "Invoice Due Date",
+        "type": "string",
+        "hint": "The date by which the invoice payment is due, in its original format."
+      },
+      {
+        "key": "invoice_number",
+        "name": "Invoice Number",
+        "type": "string",
+        "hint": "The primary invoice number. Prioritize this if multiple numbers are present."
+      },
+      {
+        "key": "payment_terms",
+        "name": "Payment Terms",
+        "type": "string",
+        "hint": "The agreed-upon payment terms (e.g., \"Net 30\", \"Due on receipt\")."
+      },
+      {
+        "key": "pickup_date",
+        "name": "Pickup Date",
+        "type": "string",
+        "hint": "The date goods were picked up or are scheduled for pickup, in its original format."
+      },
+      {
+        "key": "pickup_location_address",
+        "name": "Pickup Location Address",
+        "type": "string",
+        "hint": "The full address of the pickup location."
+      },
+      {
+        "key": "pickup_location_name",
+        "name": "Pickup Location Name",
+        "type": "string",
+        "hint": "The name of the pickup location."
+      },
+      {
+        "key": "remittance_address",
+        "name": "Remittance Address",
+        "type": "string",
+        "hint": "The complete address for sending payment, typically found under \"Remit To\" or \"Bank Details\"."
+      },
+      {
+        "key": "remittance_name",
+        "name": "Remittance Name",
+        "type": "string",
+        "hint": "The name of the entity to whom payment should be remitted."
+      },
+      {
+        "key": "steamship_line_no",
+        "name": "Steamship Line No",
+        "type": "string",
+        "hint": "The steamship line number or booking reference."
+      },
+      {
+        "key": "sub_total",
+        "name": "Sub Total",
+        "type": "string",
+        "hint": "The sum of all line item amounts"
+      },
+      {
+        "key": "total_amount",
+        "name": "Total Amount",
+        "type": "string",
+        "hint": "The grand total of the invoice"
+      },
+      {
+        "key": "total_quantity",
+        "name": "Total Quantity",
+        "type": "string",
+        "hint": "The total quantity of all items on the invoice."
+      },
+      {
+        "key": "total_tax",
+        "name": "Total Tax",
+        "type": "string",
+        "hint": "The total tax amount applied to the invoice."
+      },
+      {
+        "key": "total_vat",
+        "name": "Total Vat",
+        "type": "string",
+        "hint": "The total VAT amount applied to the invoice."
+      },
+      {
+        "key": "volume_uom",
+        "name": "Volume Uom",
+        "type": "string",
+        "hint": "The unit of measure for volume (e.g., \"CBM\", \"CFT\")."
+      },
+      {
+        "key": "voyage_number",
+        "name": "Voyage Number",
+        "type": "string",
+        "hint": "The voyage or flight number."
+      },
+      {
+        "key": "weight_uom",
+        "name": "Weight Uom",
+        "type": "string",
+        "hint": "The unit of measure for weight (e.g., \"KG\", \"LBS\")."
+      },
+      {
+        "key": "bill_to_name",
+        "name": "Bill To Name",
+        "type": "string",
+        "hint": "The name of the entity to whom the invoice is billed."
+      },
+      {
+        "key": "bill_to_address",
+        "name": "Bill To Address",
+        "type": "string",
+        "hint": "The complete address of the billing entity."
+      },
+      {
+        "key": "commodity",
+        "name": "Commodity",
+        "type": "string",
+        "hint": "The general description of the goods being shipped."
+      },
+      {
+        "key": "commodity_code",
+        "name": "Commodity Code",
+        "type": "string",
+        "hint": "The code associated with the commodity."
+      },
+      {
+        "key": "customer_address",
+        "name": "Customer Address",
+        "type": "string",
+        "hint": "The complete address of the customer."
+      },
+      {
+        "key": "customer_id",
+        "name": "Customer Id",
+        "type": "string",
+        "hint": "The customer's unique identification number."
+      },
+      {
+        "key": "customer_name",
+        "name": "Customer Name",
+        "type": "string",
+        "hint": "The full registered name of the customer."
+      },
+      {
+        "key": "customer_po",
+        "name": "Customer Po",
+        "type": "string",
+        "hint": "The customer's purchase order number. Look for \"Customer PO\", \"PO Number\", \"Buyer Ref.\", \"Customer Reference\",\"Reference\"."
+      },
+      {
+        "key": "customer_address_recipient",
+        "name": "Customer Address Recipient",
+        "type": "string",
+        "hint": "The specific recipient name at the customer's address if different from customer_name."
+      },
+      {
+        "key": "customer_tax_id",
+        "name": "Customer Tax Id",
+        "type": "string",
+        "hint": "The customer's tax identification number."
+      },
+      {
+        "key": "hs_code",
+        "name": "Hs Code",
+        "type": "string",
+        "hint": "The Harmonized System (HS) code applicable to the primary commodity or document if not item-specific."
+      },
+      {
+        "key": "ship_to_address",
+        "name": "Ship To Address",
+        "type": "string",
+        "hint": "The complete address where the goods are to be shipped."
+      },
+      {
+        "key": "ship_to_name",
+        "name": "Ship To Name",
+        "type": "string",
+        "hint": "The name of the entity at the ship-to address."
+      },
+      {
+        "key": "vendor_address",
+        "name": "Vendor Address",
+        "type": "string",
+        "hint": "The complete address of the vendor (if different from exporter)."
+      },
+      {
+        "key": "vendor_name",
+        "name": "Vendor Name",
+        "type": "string",
+        "hint": "The full registered name of the vendor (if different from exporter)."
+      },
+      {
+        "key": "vendor_address_recipient",
+        "name": "Vendor Address Recipient",
+        "type": "string",
+        "hint": "The specific recipient name at the vendor's address."
+      },
+      {
+        "key": "temperature",
+        "name": "Temperature",
+        "type": "string",
+        "hint": "The required temperature for the shipment, including unit (e.g., \"2-8 °C\", \"Ambient\")."
+      }
+    ]
+  },
+  {
+    "key": "charge_details",
+    "name": "Charge Details",
+    "type": "array",
+    "hint": "A list of individual products or services on the invoice. Each object represents one line item.",
+    "fields": [
+      {
+        "key": "amount",
+        "name": "Amount",
+        "type": "string",
+        "hint": "The total amount for this specific line item."
+      },
+      {
+        "key": "country_of_origin",
+        "name": "Country Of Origin",
+        "type": "string",
+        "hint": "The country where the goods for this line item originated."
+      },
+      {
+        "key": "currency",
+        "name": "Currency",
+        "type": "string",
+        "hint": "The currency of the unit price/amount for this specific line item, if specified."
+      },
+      {
+        "key": "date",
+        "name": "Date",
+        "type": "string",
+        "hint": "A date associated with this line item if specific (e.g., service date)."
+      },
+      {
+        "key": "description",
+        "name": "Description",
+        "type": "string",
+        "hint": "A detailed description of the product or service."
+      },
+      {
+        "key": "hs_code",
+        "name": "Hs Code",
+        "type": "string",
+        "hint": "The Harmonized System (HS) code for this specific line item."
+      },
+      {
+        "key": "part_number",
+        "name": "Part Number",
+        "type": "string",
+        "hint": "The manufacturer's part number for this item."
+      },
+      {
+        "key": "po_number",
+        "name": "Po Number",
+        "type": "string",
+        "hint": "A purchase order number specific to this line item if different from the document-level PO."
+      },
+      {
+        "key": "product_code",
+        "name": "Product Code",
+        "type": "string",
+        "hint": "A specific product code or SKU for this item."
+      },
+      {
+        "key": "quantity",
+        "name": "Quantity",
+        "type": "string",
+        "hint": "The quantity of items in this line."
+      },
+      {
+        "key": "rate",
+        "name": "Rate",
+        "type": "string",
+        "hint": "The unit price or rate for this item."
+      },
+      {
+        "key": "sku",
+        "name": "Sku",
+        "type": "string",
+        "hint": "Stock Keeping Unit for the product."
+      },
+      {
+        "key": "tax",
+        "name": "Tax",
+        "type": "string",
+        "hint": "The tax amount applied to this specific line item."
+      },
+      {
+        "key": "uom",
+        "name": "Uom",
+        "type": "string",
+        "hint": "The unit of measure for the quantity (e.g., \"PCS\", \"Bags\")."
+      },
+      {
+        "key": "vat",
+        "name": "Vat",
+        "type": "string",
+        "hint": "The VAT amount applied to this specific line item."
+      },
+      {
+        "key": "volume",
+        "name": "Volume",
+        "type": "string",
+        "hint": "The volume of this specific line item."
+      },
+      {
+        "key": "weight",
+        "name": "Weight",
+        "type": "string",
+        "hint": "The weight of this specific line item."
+      }
+    ]
+  }
+]

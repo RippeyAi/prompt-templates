@@ -1,12 +1,31 @@
-[
+  [
     {
-      "key": "line_items",
-      "type": "array",
-      "hint": "Overriden The items in this list are the individual items that are being charged",
-      "fields": [
-        { "name": "Description", "key": "description", "type": "string", "hint": "Overriden goods/commodity or charge description" },
-        { "name": "Weight", "key": "weight", "type": "float", "order": 2, "hint": "Overriden weight of package" },
-        { "name": "Weight Uom", "key": "weight_uom", "type": "string", "order": 1, "hint": "unit of measure for weight" }
-      ]
-    }
+    "key": "charge_details",
+    "name": "Charge Details",
+    "type": "array",
+    "hint": "A list of individual products or services on the invoice. Each object represents one line item.",
+    "fields": [
+        {
+        "key": "part_number",
+        "name": "Part Number",
+        "type": "string",
+        "hint":  "Look for 'Kundenmaterialnummer' when no valid po number is found."
+      }
+    ]
+  },
+  {
+    "key": "charge_details",
+    "issuer": "Fietzer",
+    "name": "Charge Details",
+    "type": "array",
+    "hint": "A list of individual products or services on the invoice. Each object represents one line item.",
+    "fields": [
+        {
+        "key": "part_number",
+        "name": "Part Number",
+        "type": "string",
+        "hint":  "Look for 'Kundenmaterialnummer' when no valid po number is found."
+      }
+    ]
+  }
 ]
